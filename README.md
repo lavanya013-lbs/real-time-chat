@@ -55,11 +55,23 @@ room list page
 chat page
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4c1be02a-bf74-4b35-a11c-bf2b09989625" />
 
+## Active Users Feature
+
+This chat application now supports real-time online user tracking.
+
+How it works
+
+- Users join a chat room using Socket.IO.
+- The server tracks active users for each room.
+- Online users are displayed at the top of the chat room.
+- When a user joins or leaves, the list updates automatically for everyone in the room.
+
+Example
+
+🟢 Online: lavanya, manish, bhaskar
 
 
 ## Future Enhancements
-
-* Active user display
 * Room creation
 * Typing indicator
 * Message timestamps
