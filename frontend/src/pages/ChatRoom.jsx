@@ -88,7 +88,10 @@ function ChatRoom() {
       socket.off("receive-message");
       socket.off("user-typing");
       socket.off("user-stop-typing");
-      socket.disconnect();
+      clearTimeout(window.typingTimer);
+      if (roomId) {
+        socket.emit("stop-typing", roomId);
+      }
     };
   }, [roomId]);
 
