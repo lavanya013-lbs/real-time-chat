@@ -13,6 +13,7 @@ function ChatRoom() {
   const [message, setMessage] = useState("");
   const [roomName, setRoomName] = useState("");
   const [activeUsers, setActiveUsers] = useState([]);
+  const [typingUser, setTypingUser] = useState("");
 
   const rawUsername = localStorage.getItem("username");
   const username = rawUsername && rawUsername.trim() ? rawUsername.trim() : null;
@@ -71,10 +72,26 @@ function ChatRoom() {
       setMessages((prev) => [...prev, data]);
     });
 
+    //typing incicator --on
+    socket.on("user-typing", (username) => {
+    setTypingUser(username);
+    });
+
+    socket.on("user-stop-typing", () => {
+    setTypingUser("");
+    });
+
+    
+
     return () => {
       socket.off("activeUsers");
       socket.off("receive-message");
-      socket.disconnect();
+      socket.off("user-typing");
+      socket.off("user-stop-typing");
+      clearTimeout(window.typingTimer);
+      if (roomId) {
+        socket.emit("stop-typing", roomId);
+      }
     };
   }, [roomId]);
 
@@ -88,6 +105,7 @@ useEffect(() => {
 
   const sendMessage = async () => {
     if (!message.trim()) return;
+    
 
     const msgData = {
       roomId,
@@ -107,7 +125,10 @@ useEffect(() => {
     } catch (error) {
       console.error(error);
     }
+  
   };
+  
+
 
   return (
     <div className="chat-box">
@@ -123,6 +144,8 @@ useEffect(() => {
       </p>
         </div>
 
+      
+
       <div className="messages">
         {messages.map((msg, index) => (
           <div
@@ -133,6 +156,12 @@ useEffect(() => {
             <strong>{msg.username}</strong>: {msg.text}
           </div>
         ))}
+
+        {typingUser && typingUser !== username && (
+          <p className="typing">
+            {typingUser} is typing...
+          </p>
+      )}
       </div>
     
     <div className="input-area">
@@ -140,7 +169,20 @@ useEffect(() => {
       type="text"
       placeholder="Type message..."
       value={message}
-      onChange={(e) => setMessage(e.target.value)}
+      onChange={(e) => 
+       {setMessage(e.target.value)
+      socket.emit("typing", {
+      roomId,
+      username,
+    });
+
+    clearTimeout(window.typingTimer);
+
+    window.typingTimer = setTimeout(() => {
+      socket.emit("stop-typing", roomId);
+    }, 1000);
+  }}
+      
       />
 
       <button onClick={sendMessage}>

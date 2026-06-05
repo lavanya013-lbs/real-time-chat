@@ -75,6 +75,14 @@ socket.on("join-room", (roomId, username) => {
   io.to(roomId).emit("activeUsers", usernames);
 });
 
+  socket.on("typing", ({ roomId, username }) => {
+    socket.to(roomId).emit("user-typing", username);
+  });
+
+  socket.on("stop-typing", (roomId) => {
+    socket.to(roomId).emit("user-stop-typing");
+  });
+
   socket.on("send-message", (data) => {
     io.to(data.roomId).emit("receive-message", data);
   });

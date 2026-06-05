@@ -10,6 +10,9 @@ A full-stack real-time chat application built using React, Node.js, Express.js, 
 * Responsive user interface
 * Socket.IO integration
 * Room joining functionality
+* Active user display
+* Typing indicator
+* Real-time user presence updates
 
 ## Tech Stack
 
@@ -68,14 +71,11 @@ How it works
 
 Example
 
-🟢 Online: lavanya, manish, bhaskar
-
-
-## Future Enhancements
-* Room creation
-* Typing indicator
+* Room creation interface
 * Message timestamps
-* User authentication
+* User authentication and authorization
+* Message editing and deletion
+* Direct messaging between users
 
 ## Author
 
