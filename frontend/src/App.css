@@ -17,7 +17,7 @@ body {
 
 .listroom button {
   padding: 10px 20px;
-  background: #2196f3;
+  background: #2d79b7;
   color: white;
   border: none;
   border-radius: 5px;
@@ -25,17 +25,17 @@ body {
 }
 
 .chat-box {
-  width: 750px;
-  max-width:850px;
-  height: 80vh;
-  margin: 30px auto;
+  width: 100%;
+  max-width:900px;
+  height: 100vh;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
 
   background: #f8fafc;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 0px 15px rgba(0,0,0,0.15);
   box-sizing: border-box;
 }
 
@@ -55,19 +55,31 @@ body {
   flex-direction: column;
   
   margin:15px 0;
-  justify-content: space-between;
+  gap:8px;
   
 }
 
 .message {
-  background: #67a2cc;
-  padding: 10px 15px;
+  background: #ffff;
+  padding: 10px;
   border-radius: 12px;
   margin: 8px 0;
   max-width: 60%;
   width:fit-content;
   align-self: flex-start;
   word-wrap: break-word;
+}
+
+.my-message {
+  background: #dcf8c6;
+  padding:10px;
+  margin:8px 0;
+  border-radius: 12px;
+  align-self: flex-end;
+  width:fit-content;
+  max-width: 60%;
+  word-wrap: break-word;
+
 }
 
 .input-area {
@@ -80,33 +92,20 @@ body {
 
 .input-area input {
   flex: 1;
-  padding: 12px;
+  padding: 18px;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
 
 .input-area button {
   width: 100px;
-  background: #2196f3;
+  background: #2d79b7;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.my-message {
-  background: #54c06d;
-  padding:10px 15px;
-  margin:8px-0;
-  border-radius: 12px;
-  align-self: flex-end;
-  width:fit-content;
-  max-width: 60%;
-  word-wrap: break-word;
-  
-
-  
-}
 
 .room-card {
   margin: 15px 0;
@@ -115,3 +114,29 @@ body {
 .room-card h3 {
   margin-bottom: 10px;
 }
+
+.users-list {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.chat-header {
+  background: #075e54;
+  color: white;
+  padding: 15px;
+  border-radius: 10px 10px 0 0;
+}
+
+.back-btn {
+  width: 100px;
+  height: 40px;
+  background: #2d79b7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: center;
+}
+

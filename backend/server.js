@@ -15,6 +15,7 @@ const roomRoutes = require("./routes/roomRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 
 const server = http.createServer(app);
+const activeUsers = {};
 
 app.use(cors());
 app.use(express.json());
@@ -35,10 +36,30 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("User Connected");
+  console.log("user Connection",socket.id);
 
-  socket.on("join-room", (roomId) => {
+socket.on("join-room", (roomId,username) => {
+  console.log("JOIN ROOM EVENT");
+  console.log("roomId:", roomId);
+  console.log("username:", username);
     socket.join(roomId);
+    
+    socket.roomId=roomId;
+    socket.username=username;
+   
+
+     if (!activeUsers[roomId]) {
+      activeUsers[roomId] = [];
+    }
+
+  if (!activeUsers[roomId].includes(username)) {
+    activeUsers[roomId].push(username);
+  }
+
+    io.to(roomId).emit(
+      "activeUsers",
+      activeUsers[roomId]
+    );
   });
 
   socket.on("send-message", (data) => {
@@ -46,8 +67,25 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User Disconnected");
+    console.log(socket.username,"left rooom",socket.roomId);
+
+    const roomId = socket.roomId;
+    const username = socket.username;
+
+    if (roomId && activeUsers[roomId]) {
+
+      activeUsers[roomId] =
+        activeUsers[roomId].filter(
+          (user) => user !== username
+        );
+
+      io.to(roomId).emit(
+        "activeUsers",
+        activeUsers[roomId]
+      );
+    }
   });
+  
 });
 
 server.listen(PORT, () => {
