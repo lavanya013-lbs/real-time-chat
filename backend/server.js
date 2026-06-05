@@ -49,6 +49,14 @@ socket.on("join-room", (roomId, username) => {
     return;
   }
 
+  socket.on("typing", ({ roomId, username }) => {
+  socket.to(roomId).emit("user-typing", username);
+  });
+
+  socket.on("stop-typing", (roomId) => {
+  socket.to(roomId).emit("user-stop-typing");
+  });
+
   console.log("JOIN ROOM EVENT");
   console.log("roomId:", roomId);
   console.log("username:", username);
