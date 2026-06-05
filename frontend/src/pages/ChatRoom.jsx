@@ -12,19 +12,20 @@ function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [roomName, setRoomName] = useState("");
-  const [activeUsers, setActiveUsers] =useState([]);
+  const [activeUsers, setActiveUsers] = useState([]);
 
-  const username = localStorage.getItem("username");
+  const rawUsername = localStorage.getItem("username");
+  const username = rawUsername && rawUsername.trim() ? rawUsername.trim() : null;
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
-    socket.emit("join-room",
-       roomId,
-       username,
+    // Only join room if username is valid
+    if (!username) {
+      socket.emit("error", "Username is required");
+      return;
+    }
 
-    );
+    socket.emit("join-room", roomId, username);
     
     socket.on(
     "activeUsers",
