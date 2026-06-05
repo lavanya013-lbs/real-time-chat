@@ -4,7 +4,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://real-time-chat-ea0b.onrender.com");
 
 function ChatRoom() {
   const { roomId } = useParams();
@@ -42,7 +42,7 @@ function ChatRoom() {
       try {
         // Fetch room name
         const roomRes = await axios.get(
-          "http://localhost:5000/api/rooms"
+          "https://real-time-chat-ea0b.onrender.com/api/rooms"
         );
 
         const room = roomRes.data.find(
