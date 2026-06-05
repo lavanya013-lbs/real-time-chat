@@ -12,16 +12,30 @@ function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [roomName, setRoomName] = useState("");
+  const [activeUsers, setActiveUsers] = useState([]);
 
-  const username = localStorage.getItem("username");
+  const rawUsername = localStorage.getItem("username");
+  const username = rawUsername && rawUsername.trim() ? rawUsername.trim() : null;
   const navigate = useNavigate();
 
-<button onClick={() => navigate("/")}>
-  ← Back
-</button>
-
   useEffect(() => {
-    socket.emit("join-room", roomId);
+    // Only join room if username is valid
+    if (!username) {
+      socket.emit("error", "Username is required");
+      return;
+    }
+
+    socket.emit("join-room", roomId, username);
+    
+    socket.on(
+    "activeUsers",
+    (users) => {
+    setActiveUsers(users);
+    }
+    
+    );
+    
+
 
     const fetchData = async () => {
       try {
@@ -58,7 +72,9 @@ function ChatRoom() {
     });
 
     return () => {
+      socket.off("activeUsers");
       socket.off("receive-message");
+      socket.disconnect();
     };
   }, [roomId]);
 
@@ -95,7 +111,17 @@ useEffect(() => {
 
   return (
     <div className="chat-box">
+      
       <h2>{roomName}</h2>
+      <button className="back-btn" onClick={()=>navigate("/")}>
+        Back
+      </button>
+
+      <div className="users-list">
+      <p>
+        🟢 Online : {activeUsers.join(" , ")}
+      </p>
+        </div>
 
       <div className="messages">
         {messages.map((msg, index) => (
