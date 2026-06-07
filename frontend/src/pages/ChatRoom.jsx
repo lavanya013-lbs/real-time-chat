@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { io } from "socket.io-client";
@@ -18,6 +18,9 @@ function ChatRoom() {
   const rawUsername = localStorage.getItem("username");
   const username = rawUsername && rawUsername.trim() ? rawUsername.trim() : null;
   const navigate = useNavigate();
+
+  const messagesRef=useRef(null);
+  const bottomRef=useRef(null);
 
   useEffect(() => {
     // Only join room if username is valid
@@ -95,13 +98,17 @@ function ChatRoom() {
     };
   }, [roomId]);
 
-useEffect(() => {
-  const messagesBox = document.querySelector(".messages");
+  
 
-  if (messagesBox) {
-    messagesBox.scrollTop = messagesBox.scrollHeight;
-  }
+useEffect(() => {
+  bottomRef.current?.scrollIntoView({
+    behavior: "smooth",
+  });
 }, [messages]);
+  
+  
+
+  
 
   const sendMessage = async () => {
     if (!message.trim()) return;
@@ -111,6 +118,7 @@ useEffect(() => {
       roomId,
       username,
       text: message,
+      timestamp: new Date(),
     };
 
     try {
@@ -146,7 +154,7 @@ useEffect(() => {
 
       
 
-      <div className="messages">
+      <div className="messages" ref={messagesRef}>
         {messages.map((msg, index) => (
           <div
            key={index} className={
@@ -154,14 +162,28 @@ useEffect(() => {
         }    
         >
             <strong>{msg.username}</strong>: {msg.text}
+
+            <div className="timestamp">
+              {new Date(
+                msg.timestamp || msg.createdAt || msg.timestamps || Date.now()
+              ).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </div>
           </div>
         ))}
+
+        {messages.length === 0 && (
+         <p style={{ color: "gray" }}>No messages yet. Start the conversation!</p>
+        )}
 
         {typingUser && typingUser !== username && (
           <p className="typing">
             {typingUser} is typing...
           </p>
       )}
+      <div ref={bottomRef}></div>
       </div>
     
     <div className="input-area">
@@ -170,7 +192,9 @@ useEffect(() => {
       placeholder="Type message..."
       value={message}
       onChange={(e) => 
-       {setMessage(e.target.value)
+       {setMessage(e.target.value);
+
+
       socket.emit("typing", {
       roomId,
       username,
@@ -182,7 +206,11 @@ useEffect(() => {
       socket.emit("stop-typing", roomId);
     }, 1000);
   }}
-      
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  }}
       />
 
       <button onClick={sendMessage}>
