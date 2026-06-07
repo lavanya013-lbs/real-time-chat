@@ -57,7 +57,7 @@ room list page
 ##page2
 chat page
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4c1be02a-bf74-4b35-a11c-bf2b09989625" />
-
+### feature:
 ## Active Users Feature
 
 This chat application now supports real-time online user tracking.
@@ -69,13 +69,16 @@ How it works
 - Online users are displayed at the top of the chat room.
 - When a user joins or leaves, the list updates automatically for everyone in the room.
 
-Example
+## typing indicator feature
 
-* Room creation interface
-* Message timestamps
-* User authentication and authorization
-* Message editing and deletion
-* Direct messaging between users
+Description:
+
+- Added real-time typing indicator using Socket.IO
+- Shows when a user is typing in the chat room
+- Automatically hides indicator after inactivity
+- Improved chat experience
+
+
 
 ## Author
 
