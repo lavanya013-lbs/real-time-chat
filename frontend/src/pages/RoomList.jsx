@@ -18,7 +18,7 @@ function RoomList() {
   const fetchRooms = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/rooms"
+        "https://real-time-chat-ea0b.onrender.com/api/rooms"
       );
 
       setRooms(res.data);
