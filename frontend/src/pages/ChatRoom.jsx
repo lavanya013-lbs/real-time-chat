@@ -58,7 +58,7 @@ function ChatRoom() {
 
         // Fetch old messages
         const msgRes = await axios.get(
-          `http://localhost:5000/api/messages/${roomId}`
+          `https://real-time-chat-ea0b.onrender.com/api/messages/${roomId}`
         );
 
         setMessages(msgRes.data);
@@ -123,7 +123,7 @@ useEffect(() => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/messages",
+        "https://real-time-chat-ea0b.onrender.com/api/messages",
         msgData
       );
 
