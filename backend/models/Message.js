@@ -14,12 +14,13 @@ const messageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
-    timestamps: {
-      type:Date,
-      default: Date.now,
-    }
+    timestamps: true,
   }
 );
 

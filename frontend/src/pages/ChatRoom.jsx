@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
-import {useRef} from "react";
 const socket = io("http://localhost:5000");
 
 function ChatRoom() {
@@ -165,12 +164,12 @@ useEffect(() => {
 
             <div className="timestamp">
               {new Date(
-                msg.timestamp || msg.createdAt
+                msg.timestamp || msg.createdAt || msg.timestamps || Date.now()
               ).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
-          })}
-        </div>
+              })}
+            </div>
           </div>
         ))}
 
