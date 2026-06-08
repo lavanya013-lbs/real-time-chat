@@ -4,15 +4,28 @@ const router = express.Router();
 const Room = require("../models/Room");
 
 // Create Room
-router.post("/", async (req, res) => {
+router.post("/create-room", async (req, res) => {
   try {
-    const { roomName } = req.body;
+    const { roomName, description } = req.body;
+
+    const roomExists = await Room.findOne({ roomName, });
+
+    if (roomExists) {
+      return res.status(400).json({
+        success: false,
+        message: "Room already exists",
+      });
+    }
 
     const room = await Room.create({
       roomName,
+      description,
     });
 
-    res.status(201).json(room);
+    res.status(201).json({
+      success: true,
+      room,
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

@@ -148,7 +148,7 @@ useEffect(() => {
 
       <div className="users-list">
       <p>
-        🟢 Online : {activeUsers.join(" , ")}
+        🟢 Online  {activeUsers.length}  :   {activeUsers.join(" , ")}
       </p>
         </div>
 
