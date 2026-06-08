@@ -27,7 +27,7 @@ body {
 .chat-box {
   width: 100%;
   max-width:900px;
-  min-height: calc(100vh - 40px);
+  height: calc(100vh - 40px);
   margin: 20px auto;
   display: flex;
   flex-direction: column;
@@ -42,19 +42,19 @@ body {
 .chat-box h2{
   text-align: center;
   margin-bottom: 15px;
+
 }
 
 .messages {
   flex: 1;
   overflow-y: auto;
-  min-height: 450px;
+  min-height: 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   
-  margin:15px 0;
   gap:8px;
   
 }
@@ -119,15 +119,19 @@ body {
 .users-list {
   margin-bottom: 15px;
   padding: 10px;
-  background: #f5f5f5;
+  background:  #eaf0f5;
   border-radius: 8px;
+  color: #0b0b0b;
 }
 
 .chat-header {
-  background: #075e54;
-  color: white;
+  background: #f8fafc;
+  color: rgb(25, 35, 86);
   padding: 15px;
   border-radius: 10px 10px 0 0;
+  position: sticky;
+  top:0;
+  
 }
 
 .back-btn {

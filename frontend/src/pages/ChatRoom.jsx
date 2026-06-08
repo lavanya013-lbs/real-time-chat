@@ -140,7 +140,7 @@ useEffect(() => {
 
   return (
     <div className="chat-box">
-      
+      <div className="chat-header">
       <h2>{roomName}</h2>
       <button className="back-btn" onClick={()=>navigate("/")}>
         Back
@@ -150,6 +150,7 @@ useEffect(() => {
       <p>
         🟢 Online  {activeUsers.length}  :   {activeUsers.join(" , ")}
       </p>
+        </div>
         </div>
 
       
