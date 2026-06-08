@@ -59,7 +59,8 @@ room list page
 
 ##page2
 chat page
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/81f2de62-71fe-4143-9046-a639bc55df55" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e75b89bc-68d2-4a19-9aa1-64941c242aee" />
+
 
 
 ### feature:
