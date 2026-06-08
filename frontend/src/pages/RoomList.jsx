@@ -21,7 +21,7 @@ function RoomList() {
   }
 
   try {
-    await axios.post("http://localhost:5000/api/rooms/create-room", {
+    await axios.post("https://real-time-chat-ea0b.onrender.com/api/rooms/create-room", {
       roomName: newRoomName,
       description: newDescription,
     });
